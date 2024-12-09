@@ -100,7 +100,7 @@ class run_config():
         TO2.config_split()
         TO2.bonds_to_atoms()
         TO2.to_xyz()
-        TO2.output_snapxyz(n_mcstep)
+        TO2.output_snapxyz(filename='snap_shoots',n_mcstep=n_mcstep)
 
 
     def count_distribution(self,bin=5): # 统计链长分布
