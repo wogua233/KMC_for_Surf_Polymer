@@ -125,6 +125,8 @@ class run_config():
                 for j in range(i,i+bin):
                     if j in count_dict:
                         normalized_dict[i+bin//2]+=count_dict[j]
+                if normalized_dict[i+bin//2]==0:
+                    normalized_dict.pop(i+bin//2)
         return normalized_dict
 
 

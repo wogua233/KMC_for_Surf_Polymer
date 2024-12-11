@@ -45,7 +45,9 @@ class do_event():
         self.P_monomer_BaddB=self.n_unic_mono*(self.n_unic_mono-1)*self.K_B*self.BBtB # 在单体B上加单体B
         self.P_monomer_BaddA=self.n_unic_mono*(self.n_unic_mono-1)*self.K_B*self.BAtB # 在单体B上加单体A
         # put_in
-        self.P_in=self.p_in*(1-self.n_in/self.n_maxmono) # 输入单体
+        # self.P_in=self.p_in*(1-self.n_in/self.n_maxmono) # 输入单体 (速率随剩余格点变化)
+        self.P_in=self.p_in if self.n_in<self.n_maxmono else 0 # 输入单体 (速率不随剩余格点变化)
+        # self.P_in=self.p_in *((self.n_maxmono-self.n_in)/self.n_maxmono)  # 输入单体 (速率随剩余格点变化且归一化)
         # 加H终止
         self.P_termin_chain_AH=self.n_chain_act_A*self.K_termin # 链A端被H终止
         self.P_termin_chain_BH=self.n_chain_act_B*self.K_termin # 链B端被H终止
@@ -124,7 +126,7 @@ class do_event():
     
     def mc_go_on(self):
         # print('n_alive:',self.n_alive,'n_in::',self.n_in)
-        if self.n_in==self.n_maxmono and (self.n_chain_act_A+self.n_chain_act_B)==0: # 当单体加入达到最大且没有活性端剩余时才停止
+        if self.n_in==self.n_maxmono and (self.n_chain_act_A+self.n_chain_act_B)==0 and self.n_unic_mono <=1: # 当单体加入达到最大且没有链活性端剩余且单体最多剩1时才停止
             return False
         else:
             return True
